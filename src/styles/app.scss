@@ -1,0 +1,195 @@
+@use "fonts";
+
+
+@mixin portrait {
+  @media screen and (max-aspect-ratio: 1) {
+    @content;
+  }
+}
+@mixin landscape {
+  @media screen and (min-aspect-ratio: 1) {
+    @content;
+  }
+}
+
+@mixin main-grid($center-width: 700px) {
+  display: grid;
+  grid-template-columns: 1fr min(98%, $center-width) 1fr;
+
+  * {
+      grid-column: 2;
+    }
+}
+
+
+
+body {
+  background-color: hsl(0deg, 0%, 4%);
+  color: hsl(0deg, 0%, 100%);
+  font-family: "Faustina", "Liberation Serif", serif;
+  font-weight: normal;
+
+  a {
+	  color: hsl(45deg, 85%, 50%);
+  }
+  a:visited {
+	  color: hsl( 279deg, 85%, 79% );
+  }
+
+  header {
+    @include main-grid(); 
+  }
+  
+  main {
+    @include main-grid();
+    
+    article.artwork-listitem {
+
+      grid-column: 1 / -1;
+
+      display: grid;
+      --left-pc: 0.625;
+      --max-content-width: 800px;
+      grid-template-columns:
+        1fr
+        min(calc(100% * var(--left-pc)), calc(var(--max-content-width) * var(--left-pc)))
+        min(calc(100% * (1 - var(--left-pc))), calc(var(--max-content-width) * (1 - var(--left-pc))))
+        1fr;
+
+      border-bottom: 1px dotted rgba(0,0,0,.8);
+      padding-bottom: 2ch;
+      margin-bottom: 8ch;
+
+
+      
+      .artwork-info-container {
+        
+        grid-column: 3;
+        align-self: end;
+        margin-bottom: 3ch;
+        margin-left: 3ch;
+
+        .artwork-header {
+          .artwork-title {
+            font-size: 2.5em;
+            //font-style: italic;
+            font-family: "Heliotrope 4", "Faustina", serif;
+          }
+        }
+
+        .artwork-desc-container {
+          grid-column: 3;
+          align-self: end;
+          p {
+            margin: .4ch;
+            text-align: left;
+            width: calc(max(40%, 200px));
+            color: rgba(0,0,0,0.8);
+          }
+          .date {
+            // font-size: 1.25em;
+            // margin-right: 1.5ch;
+            // font-style: italic;
+          }
+          span {
+            display: inline-block;
+          }
+        }
+
+        .price {
+
+          color: hsl(0deg 0% 0% / 0.7);
+          margin-top: 0.8ch;
+          margin-left: 0.2ch;
+
+          span {
+            font-family: "Faustina", serif;
+            font-size: 0.9rem;
+            margin-right: 0.4ch;
+          }
+
+          a.inquire {
+            --price-button-color: 0deg 25% 40%;
+            border: 1px solid hsl(var(--price-button-color));
+            border-radius: .3ch;
+            color: var(--price-button-color);
+            font-size: small;
+            font-family: "Heliotrope 3", "Faustina", serif;
+            background-color: transparent;
+            transition: 0.3s;
+            text-decoration: none;
+            padding: 0.2ch 0.4ch 0.2ch 0.4ch;
+
+            &:hover {
+              background-color: hsl(var(--price-button-color) / 0.1);
+              transition: 0.3s;
+            }
+          }
+        }
+      
+      }
+
+
+      
+      figure.artwork {
+        margin: 0;
+        padding: 0;
+        grid-column: 2;
+      }
+      
+      
+    }
+
+
+  } 
+  
+
+
+  footer {
+    @include main-grid();
+  
+    margin-top: 5em;
+    padding-bottom: 4ch;
+    font-size: .7em;
+    letter-spacing: .15em;
+  }
+
+} 
+
+
+header > nav {
+    margin-top: 1ch;
+    margin-bottom: 6ch;
+    padding-bottom: 3ch;
+    border-bottom: 1px solid black;
+    font-family: "Heliotrope 3 Caps";
+    font-weight: normal;
+    font-size: 1.1rem;
+}
+
+body > header > h1 {
+  font-weight: lighter;
+  letter-spacing: .2ch;
+  font-size: 3.5em;
+  margin-bottom: .5ch;
+}
+
+header > nav > .button {
+  border: 1px solid black;
+  text-decoration: none;
+  color: inherit;
+  font-size: .85em;
+  text-transform: uppercase;
+  padding: 1ch 1ch 1ch 1ch;
+  margin-right: 1ch;
+
+  transition: .2s;
+}
+header > nav > .button:hover {
+  box-shadow: 3px 3px 5px gray;
+  transform: translateX(-1px) translateY(-1px);
+  transition: .2s;
+}
+
+
+
