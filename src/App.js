@@ -39,13 +39,13 @@ export function App() {
         {
 	    id: 4,
 	    name: "Deep Chalk.4",
-	    url: new URL("/assets/flash/deep-chalk-4-jayisgames.swf", import.meta.url)
+	    url: new URL("/assets/flash/deep-chalk-4-cafe.swf", import.meta.url),
 	}
     ];
     
 
   return (
-      <main>
+       <main>
 
 	    <h1>Deep Chalk</h1>
 	    <h3>By Zack Livestone. Archived from <a href="https://jayisgames.com">Jayisgames</a> using <a href="https://ruffle.rs">Ruffle</a> for Flash emulation.</h3>
@@ -65,18 +65,36 @@ export function App() {
 		      if (currentPhase != "") {
 			  
 			  window.RufflePlayer = window.RufflePlayer || {};
+			            window.RufflePlayer.config = {
+            "contextMenu": true,
+            "showSwfDownload": true,
+            "menu": true,
+            "quality": "high"
+				    };
+			  
 			  const ruffle = window.RufflePlayer.newest();
+			  console.log(ruffle);
 			  player = ruffle.createPlayer();
 
 			  // remove all children from playerRef
-			  while (playerRef.firstChild) {
-			      playerRef.removeChild(playerRef.firstChild);
+			  while (playerRef.current.firstChild) {
+			      playerRef.current.removeChild(playerRef.current.firstChild);
 			  }
+
+			  player.style.width = "600px";
+			  player.style.height = "500px";
 			  
-		      playerRef.current.appendChild(player);
-		      player.load(
-			  phases.find(p => p.id === +currentPhase).url.pathname
-		      );
+			  playerRef.current.appendChild(player);
+			  
+			  player.load({
+			      url: phases.find(p => p.id === +currentPhase).url.pathname,
+                              allowScriptAccess: false,
+			  }).then(
+                              () => {player.swfUrl.origin = "https://jayisgames.com/";
+                                     console.log(player);
+}
+                          );
+		
 		      }
 		  }}>
 	      Play
