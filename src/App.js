@@ -11,6 +11,15 @@ export function App() {
         {id: 3, name: "Third Phase"},
         {id: 4, name: "Deep Chalk.4"}
     ];
+
+    function renderRuffle(flashFilename) {
+	window.RufflePlayer = window.RufflePlayer || {};
+	    const ruffle = window.RufflePlayer.newest();
+	    const player = ruffle.createPlayer();
+	    // const container = document.getElementById("game-container");
+	    
+	   return player;
+    };
     
 
   return (
@@ -29,7 +38,15 @@ export function App() {
 	        </select>
         </label>
 
-	
+	  <div id="game-container">
+
+
+	      <embed src={new URL("/assets/flash/deep-chalk.swf", import.meta.url)}></embed>
+	      
+	  </div>
+
+
+
 
 
     </main>
