@@ -1,5 +1,9 @@
+/** @jsxImportSource @emotion/react */
+
 import React from 'react';
 import * as ReactDOM from "react-dom/client";
+
+import { css } from '@emotion/react';
 
 export function App() {
 
@@ -63,6 +67,8 @@ export function App() {
         const ruffle = window.RufflePlayer.newest();
         console.log(ruffle);
         player = ruffle.createPlayer();
+	player.style.width = "100%";
+	
 			  
         playerRef.current.appendChild(player);
 			  
@@ -73,18 +79,41 @@ export function App() {
       });
         
     }
+
+
+    const buttonStyle = css`
+
+          margin-right: 1.5ch;
+
+          padding: 0.5ch 0.75ch 0.5ch 0.75ch ;
+
+color: inherit;
+//font-family: inherit;
+background-color: hsl(0deg 0% 100% / 0.1);
+border: none;
+cursor: pointer;
+border-radius: 0.5ch;
+
+
+
+`;
+
     
 
   return (
        <main>
 
 	    <h1>Deep Chalk</h1>
-	    <h3>By Zack Livestone. Archived from <a href="https://jayisgames.com">Jayisgames</a> using <a href="https://ruffle.rs">Ruffle</a> for Flash emulation.</h3>
+	    <h3>By Zack Livestone (and Boards of Canada). Archived from <a href="https://jayisgames.com">Jayisgames</a> using <a href="https://ruffle.rs">Ruffle</a> for Flash emulation.</h3>
       
 
 	<label>Select a game:
 	    <br />
-	    <select name="phase" id="phase" value={currentPhase}
+	    <select 
+        css={css`
+        margin-top: .75ch;
+        margin-bottom: 2ch;`}
+    name="phase" id="phase" value={currentPhase}
 		    onChange={e => setCurrentPhase(e.target.value)}>
 		
                     <option value=""></option>
@@ -94,24 +123,45 @@ export function App() {
 	        </select>
         </label>
 
-        {currentPhase !== "" &&
-	  <button onClick={attachPlayer}>
-	      Play
-	  </button>
-    }
 
-          {isPlayerOpen &&
-	      <button onClick={() => {
+
+
+    <div 
+        id="playerButtons"
+        css={css`
+        margin-bottom: 3ch;
+        `}
+    >
+        
+        {currentPhase !== "" &&
+         <button css={buttonStyle} onClick={attachPlayer}>
+              Play
+          </button>
+        }
+
+        {isPlayerOpen &&
+         <>
+	     <button css={buttonStyle}>Fullscreen</button>
+	     <button css={buttonStyle} onClick={() => {
               setCurrentPhase("");
               detachPlayer();
-          }}>Close player</button>
-          }
+		     }}>Close player</button>
+	 </>
+        }
+          
+    </div>
+
+
+
+
+
 
 	  <div id="game-container">
-
-
-                   <div ref={playerRef}></div>	  
-	      
+              <div ref={playerRef}
+		   css={css`
+                       width:100%;
+                   `}
+	      ></div>  
 	  </div>
 
 

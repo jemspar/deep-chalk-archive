@@ -15,6 +15,7 @@
     "build": "parcel build"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
     "@ruffle-rs/ruffle": "^0.1.0-nightly.2023.7.4"
   }
 }
