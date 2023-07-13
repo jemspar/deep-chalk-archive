@@ -67,7 +67,9 @@ export function App() {
         const ruffle = window.RufflePlayer.newest();
         console.log(ruffle);
         player = ruffle.createPlayer();
-	player.style.width = "100%";
+
+	player.style.maxWidth = "100%";
+
 	
 			  
         playerRef.current.appendChild(player);
@@ -77,8 +79,21 @@ export function App() {
               p => p.id === +currentPhase
           ).url.pathname
       });
+
+	player.addEventListener('loadedmetadata', () => {
+	    console.info("ruffle: loaded metadata.");
+	    console.info(player.metadata.isActionScript3);
+	    player.style.width = player.metadata.width + "px";
+	    player.style.height = player.metadata.height + "px";
+	});
         
     }
+
+    function playerFullscreen() {
+	const player = playerRef.current.firstChild;
+	player.enterFullscreen();
+    }
+	
 
 
     const buttonStyle = css`
@@ -88,7 +103,6 @@ export function App() {
           padding: 0.5ch 0.75ch 0.5ch 0.75ch ;
 
 color: inherit;
-//font-family: inherit;
 background-color: hsl(0deg 0% 100% / 0.1);
 border: none;
 cursor: pointer;
@@ -100,11 +114,37 @@ border-radius: 0.5ch;
 
     
 
-  return (
-       <main>
+    return (
+	<>
+	    <nav>
+		<a className="crumb" href="https://jeremysparagon.com/">
+		&larr; jeremysparagon.com</a>
+		
+	    </nav>
+
+	    
+      <main>
+
 
 	    <h1>Deep Chalk</h1>
-	    <h3>By Zack Livestone (and Boards of Canada). Archived from <a href="https://jayisgames.com">Jayisgames</a> using <a href="https://ruffle.rs">Ruffle</a> for Flash emulation.</h3>
+	   <p css={css `
+		  font-size: 1.2em;
+		  width: 50ch;
+	  
+	      `}>By Zack Livestone (and Boards of Canada). Archived from <a href="https://jayisgames.com" target="_blank">Jayisgames</a>, using <a href="https://ruffle.rs" target="_blank">Ruffle</a> for Flash emulation. &ensp;
+
+	       <a css={css`
+font-size: 0.7em;
+letter-spacing: 0.05ch;
+`}
+		  href="https://github.com/jemspar/deep-chalk-archive/"
+		  target="_blank"
+	       >
+		   GitHub&rarr;
+		       </a>
+
+
+	   </p>
       
 
 	<label>Select a game:
@@ -141,7 +181,9 @@ border-radius: 0.5ch;
 
         {isPlayerOpen &&
          <>
-	     <button css={buttonStyle}>Fullscreen</button>
+	     <button css={buttonStyle} onClick={() => {
+			 playerFullscreen();
+		     }}>Fullscreen</button>
 	     <button css={buttonStyle} onClick={() => {
               setCurrentPhase("");
               detachPlayer();
@@ -156,10 +198,14 @@ border-radius: 0.5ch;
 
 
 
-	  <div id="game-container">
+	  <div id="game-container" class="hero">
               <div ref={playerRef}
 		   css={css`
-                       width:100%;
+                       width: fit-content;
+                       margin-left: auto;
+                       margin-right: auto;
+                       margin-top: 3ch;
+                       margin-bottom: 6ch;
                    `}
 	      ></div>  
 	  </div>
@@ -168,6 +214,11 @@ border-radius: 0.5ch;
 
 
 
-    </main>
+      </main>
+
+
+
+	</>
+	
   );
 }

@@ -18,7 +18,11 @@
 
   * {
       grid-column: 2;
-    }
+  }
+
+  .hero {
+      grid-column: 1 / -1;
+  }
 }
 
 
@@ -30,10 +34,30 @@ body {
   font-weight: normal;
 
   a {
-	  color: hsl(45deg, 85%, 50%);
+	  color: hsl(200deg, 85%, 80%);
   }
   a:visited {
 	  color: hsl( 279deg, 85%, 79% );
+  }
+
+  nav {
+      @include main-grid();
+      margin-bottom: 1ch;
+
+      a.crumb {
+	  
+	  //letter-spacing: 0.03ch;
+	  text-decoration: none;
+	  border: 1px solid;
+	  border-radius: 0.5ch;
+	  width: fit-content;
+	  padding: 0.35ch 0.6ch 0.32ch 0.6ch;
+	  margin-top: 2ch;
+	  color: hsl(0deg, 0%, 60%);
+	  font-family: "Heliotrope 3 Caps";
+
+	  
+      }
   }
 
   header {
