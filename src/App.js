@@ -66,7 +66,7 @@ export function App() {
 			  
         const ruffle = window.RufflePlayer.newest();
         console.log(ruffle);
-        player = ruffle.createPlayer();
+        const player = ruffle.createPlayer();
 
 	player.style.maxWidth = "100%";
 
