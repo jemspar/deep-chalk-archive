@@ -10,6 +10,11 @@
     "react-router-dom": "^6.14.1"
   },
   "source": "src/index.html",
+  "targets": {
+	  "default": {
+		  "publicUrl": "/deep-chalk-archive"
+	  }
+  },
   "scripts": {
     "start": "parcel",
     "build": "parcel build"
